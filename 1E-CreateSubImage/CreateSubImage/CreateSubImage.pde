@@ -9,7 +9,7 @@ int endY;
 void setup()
 {
   original = loadImage("doggy.jpg");
-  size(851,1134);
+  size(851, 1134);
 }
 
 void draw()
@@ -19,15 +19,16 @@ void draw()
   {
     if (clip == null)
     {
-      image(original,0,0);
+      image(original, 0, 0);
     } else {
-      image(clip,0,0);
+      image(clip, 0, 0);
     }
     return;
   }
-  
-  clip = original.get(startX, startY, endX-startX, endY-startY);
-  
+
+  //clip = original.get(startX, startY, endX-startX, endY-startY);
+  clip = createClip();
+
   double widthRatio = (double)width / (double)clip.width;
   double heightRatio = (double)height / (double)clip.height;
 
@@ -36,14 +37,33 @@ void draw()
     if (heightRatio > widthRatio && widthRatio != 0)
     {
       clip.resize((int)(clip.width * widthRatio), (int)(clip.height * widthRatio));
-    }
-    else if (heightRatio != 0)
+    } else if (heightRatio != 0)
     {
       clip.resize((int)(clip.width * heightRatio), (int)(clip.height * heightRatio));
     }
   }
-  
+
   makeClipping = false;
+}
+
+PImage createClip()
+{
+  int width = endX-startX;
+  int height = endY - startY;
+  
+  if (width < 0)
+  {
+    width = abs(endX-startX);
+    startX -= width;
+  }
+  
+  if (height < 0)
+  {
+    height = abs(endY-startY);
+    startY -= height;
+  }
+
+  return original.get(startX, startY, width, height);
 }
 
 void mousePressed()
@@ -61,8 +81,8 @@ void mouseReleased()
 
 void keyTyped()
 {
-  if (int(key) == 10) // Enter
+  if (int(key) == 10 && clip != null) // Enter
   {
-    save("clip.jpg");
+    clip.save("clip.jpg");
   }
 }
