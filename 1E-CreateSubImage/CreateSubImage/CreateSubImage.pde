@@ -26,7 +26,6 @@ void draw()
     return;
   }
 
-  //clip = original.get(startX, startY, endX-startX, endY-startY);
   clip = createClip();
 
   double widthRatio = (double)width / (double)clip.width;
