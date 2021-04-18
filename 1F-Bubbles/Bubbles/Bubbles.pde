@@ -55,7 +55,7 @@ class Bubble {
     float oldYPos = yPos;
     yPos = yPos - ((thisFrameMs - lastFrameMs)*speedPxPerMs);
     radius += (oldYPos-yPos) / 10;
-    xPos = xPos + random(-1,1); // Slight shake back and forth as the bubble rises
+    //xPos = xPos + random(-1,1); // Slight shake back and forth as the bubble rises
     
     circle(xPos,yPos,radius);
   }
